@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI w Logistyce – Quiz dla Menedżerów</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E45;
+    --teal: #00B4D8;
+    --teal-dk: #0077A8;
+    --teal-lt: #90E0EF;
+    --accent: #FFB703;
+    --white: #FFFFFF;
+    --light: #F0F4F8;
+    --gray: #8FA3B1;
+    --red: #E63946;
+    --green: #2DC653;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 820px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 40px 0 30px;
+    position: relative;
+  }
+  .header .badge {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .header h1 span { color: var(--teal); }
+  .header p {
+    color: var(--teal-lt);
+    font-size: 15px;
+    opacity: 0.85;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: var(--navy-mid);
+    border-radius: 10px;
+    height: 6px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal-dk), var(--teal));
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(0,180,216,0.2);
+    border-radius: 18px;
+    padding: 36px 40px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--teal);
+    border-radius: 2px 0 0 2px;
+  }
+
+  .question-number {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--teal);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .question-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 28px;
+    color: var(--white);
+  }
+
+  /* OPTIONS */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(0,180,216,0.18);
+    border-radius: 12px;
+    padding: 16px 22px;
+    cursor: pointer;
+    font-size: 14.5px;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.22s ease;
+    position: relative;
+    user-select: none;
+  }
+  .option:hover {
+    background: rgba(0,180,216,0.1);
+    border-color: var(--teal);
+    transform: translateX(4px);
+  }
+  .option .opt-letter {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(0,180,216,0.12);
+    border: 1.5px solid rgba(0,180,216,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--teal);
+    flex-shrink: 0;
+    transition: all 0.22s;
+  }
+  .option.selected {
+    background: rgba(0,180,216,0.14);
+    border-color: var(--teal);
+  }
+  .option.selected .opt-letter {
+    background: var(--teal);
+    color: var(--navy);
+    border-color: var(--teal);
+  }
+  .option.correct {
+    background: rgba(45,198,83,0.12);
+    border-color: var(--green);
+    animation: correct-pulse 0.4s;
+  }
+  .option.correct .opt-letter {
+    background: var(--green);
+    color: var(--white);
+    border-color: var(--green);
+  }
+  .option.wrong {
+    background: rgba(230,57,70,0.12);
+    border-color: var(--red);
+  }
+  .option.wrong .opt-letter {
+    background: var(--red);
+    color: var(--white);
+    border-color: var(--red);
+  }
+  .option.disabled { cursor: default; pointer-events: none; }
+  .option.dimmed { opacity: 0.38; }
+
+  @keyframes correct-pulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 20px;
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-size: 14px;
+    line-height: 1.6;
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: rgba(45,198,83,0.1); border: 1px solid rgba(45,198,83,0.3); }
+  .feedback.wrong-fb { background: rgba(230,57,70,0.1); border: 1px solid rgba(230,57,70,0.3); }
+  .feedback strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .feedback.correct-fb strong { color: var(--green); }
+  .feedback.wrong-fb strong { color: var(--red); }
+  .feedback p { color: var(--teal-lt); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.22s;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--navy);
+  }
+  .btn-primary:hover { background: #00CFF8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,180,216,0.35); }
+  .btn-primary:disabled { opacity: 0.4; cursor: default; transform: none; box-shadow: none; }
+  .btn-outline {
+    background: transparent;
+    color: var(--teal);
+    border: 1.5px solid var(--teal);
+  }
+  .btn-outline:hover { background: rgba(0,180,216,0.1); }
+
+  .controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+
+  /* SCORE SCREEN */
+  .score-screen {
+    text-align: center;
+    padding: 48px 40px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  .score-screen.show { display: block; }
+
+  .score-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .score-ring svg {
+    position: absolute;
+    top: 0; left: 0;
+    transform: rotate(-90deg);
+  }
+  .score-ring .score-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .score-ring .score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .score-ring .score-total {
+    font-size: 14px;
+    color: var(--gray);
+  }
+
+  .score-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .score-subtitle {
+    color: var(--teal-lt);
+    font-size: 15px;
+    margin-bottom: 36px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .score-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+    text-align: left;
+  }
+  .sb-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,180,216,0.15);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .sb-card .sb-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .sb-card .sb-label { font-size: 12px; color: var(--gray); }
+
+  .review-list {
+    text-align: left;
+    margin-top: 32px;
+  }
+  .review-list h3 {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .review-item {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .review-item.r-correct { background: rgba(45,198,83,0.07); border: 1px solid rgba(45,198,83,0.2); }
+  .review-item.r-wrong { background: rgba(230,57,70,0.07); border: 1px solid rgba(230,57,70,0.2); }
+  .review-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .review-q { font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .review-a { color: var(--teal-lt); font-size: 13px; }
+
+  /* INTRO */
+  .intro-screen { animation: fadeIn 0.4s ease; }
+  .intro-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 28px 0 36px;
+  }
+  .if-card {
+    background: rgba(0,180,216,0.07);
+    border: 1px solid rgba(0,180,216,0.18);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .if-icon { font-size: 28px; margin-bottom: 8px; }
+  .if-label { font-size: 13px; font-weight: 600; color: var(--teal-lt); }
+  .if-sub { font-size: 11.5px; color: var(--gray); margin-top: 3px; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .card { padding: 24px 20px; }
+    .score-breakdown { grid-template-columns: repeat(2, 1fr); }
+    .intro-features { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">🚛 Logistyka × AI</div>
+    <h1>AI w Logistyce<br><span>Quiz dla Menedżerów</span></h1>
+    <p>Sprawdź, jak dobrze znasz zastosowania sztucznej inteligencji w branży logistycznej</p>
+  </div>
+
+  <!-- INTRO -->
+  <div class="card intro-screen" id="introScreen">
+    <div class="intro-features">
+      <div class="if-card">
+        <div class="if-icon">🧠</div>
+        <div class="if-label">10 pytań</div>
+        <div class="if-sub">Poziom: menedżerski</div>
+      </div>
+      <div class="if-card">
+        <div class="if-icon">⚡</div>
+        <div class="if-label">Natychmiastowy feedback</div>
+        <div class="if-sub">Wyjaśnienie każdej odpowiedzi</div>
+      </div>
+      <div class="if-card">
+        <div class="if-icon">📊</div>
+        <div class="if-label">Wynik z rekomendacją</div>
+        <div class="if-sub">Wskazówki do dalszego rozwoju</div>
+      </div>
+    </div>
+    <p style="color: var(--teal-lt); margin-bottom:28px; font-size:14px; line-height:1.7;">
+      Quiz obejmuje tematy: prognozowanie popytu, optymalizacja tras, zarządzanie flotą, 
+      operacje magazynowe i wdrożenie AI. Idealne przygotowanie przed strategiczną rozmową 
+      o transformacji cyfrowej firmy.
+    </p>
+    <div class="controls">
+      <button class="btn btn-primary" onclick="startQuiz()">Rozpocznij Quiz →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizArea" style="display:none;">
+    <div class="progress-label">
+      <span id="progressText">Pytanie 1 z 10</span>
+      <span id="scoreText">Wynik: 0</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div class="card" id="questionCard">
+      <div class="question-number" id="questionNum">PYTANIE 01</div>
+      <div class="question-text" id="questionText"></div>
+      <div class="options" id="optionsList"></div>
+      <div class="feedback" id="feedback">
+        <strong id="feedbackTitle"></strong>
+        <p id="feedbackBody"></p>
+      </div>
+      <div class="controls">
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>
+          Następne pytanie →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE -->
+  <div class="card score-screen" id="scoreScreen">
+    <div class="score-ring">
+      <svg viewBox="0 0 160 160" width="160" height="160">
+        <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(0,180,216,0.12)" stroke-width="12"/>
+        <circle cx="80" cy="80" r="70" fill="none" stroke="var(--teal)" stroke-width="12"
+          stroke-linecap="round" stroke-dasharray="439.8" id="scoreArc" stroke-dashoffset="439.8"
+          style="transition: stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+      </svg>
+      <div class="score-inner">
+        <div class="score-num" id="finalScore">0</div>
+        <div class="score-total">/ 10</div>
+      </div>
+    </div>
+
+    <div class="score-title" id="scoreTitle">Doskonały wynik!</div>
+    <div class="score-subtitle" id="scoreSubtitle"></div>
+
+    <div class="score-breakdown">
+      <div class="sb-card">
+        <div class="sb-val" id="sbCorrect" style="color: var(--green)">0</div>
+        <div class="sb-label">✓ Poprawne odpowiedzi</div>
+      </div>
+      <div class="sb-card">
+        <div class="sb-val" id="sbWrong" style="color: var(--red)">0</div>
+        <div class="sb-label">✗ Błędne odpowiedzi</div>
+      </div>
+      <div class="sb-card">
+        <div class="sb-val" id="sbPct" style="color: var(--accent)">0%</div>
+        <div class="sb-label">⚡ Skuteczność</div>
+      </div>
+    </div>
+
+    <div class="review-list">
+      <h3>Przegląd odpowiedzi</h3>
+      <div id="reviewItems"></div>
+    </div>
+
+    <div class="controls" style="margin-top:28px; justify-content: center; gap: 14px; flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="restartQuiz()">↩ Zacznij ponownie</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Firma logistyczna wdrożyła model ML do prognozowania popytu. Które dane są NAJWAŻNIEJSZE do trenowania takiego modelu?",
+    opts: [
+      "Liczba pracowników w magazynie i ich wynagrodzenia",
+      "Historia sprzedaży, sezonowość, dane o promocjach i czynniki makroekonomiczne",
+      "Aktualne ceny paliwa i kursy walut",
+      "Liczba reklamacji klientów z ostatnich 3 miesięcy"
+    ],
+    correct: 1,
+    fb: "Modele ML do prognozowania popytu potrzebują przede wszystkim danych historycznych (historia sprzedaży/zamówień), wzorców sezonowych, informacji o promocjach oraz czynników zewnętrznych jak trendy rynkowe. To połączenie pozwala modelowi uczyć się złożonych zależności."
+  },
+  {
+    q: "Czym różni się 'predykcyjne utrzymanie' (predictive maintenance) floty od tradycyjnego utrzymania prewencyjnego?",
+    opts: [
+      "Predykcyjne utrzymanie odbywa się rzadziej – raz w roku zamiast kwartalnie",
+      "Predykcyjne opiera się na danych z czujników i ML, by przewidzieć awarię zanim nastąpi – zamiast serwisować wg. harmonogramu",
+      "Predykcyjne utrzymanie jest droższe i stosowane tylko dla luksusowych flot",
+      "Nie ma różnicy – to nowe nazewnictwo dla tego samego procesu"
+    ],
+    correct: 1,
+    fb: "Klasyczne utrzymanie prewencyjne serwisuje pojazdy według kalendarza (np. co 10.000 km). Predykcyjne utrzymanie analizuje dane z czujników (temperatura silnika, wibracje, ciśnienie) w czasie rzeczywistym i ML wskazuje dokładnie, kiedy grozi awaria. Efekt: mniej przestojów, niższe koszty o 25-40%."
+  },
+  {
+    q: "Menedżer logistyki chce zoptymalizować trasy dla 200 pojazdów jednocześnie, uwzględniając korki, okna czasowe dostaw i ograniczenia wagi. Które podejście jest właściwe?",
+    opts: [
+      "Zatrudnienie dodatkowych dyspozytorów pracujących w systemie zmianowym",
+      "Użycie arkusza Excel z ręcznym przypisaniem tras",
+      "Algorytmy optymalizacji tras oparte na AI (VRP – Vehicle Routing Problem solvers)",
+      "Zakup nowych GPS-ów dla kierowców z mapami"
+    ],
+    correct: 2,
+    fb: "Problem trasowania pojazdów (VRP) z wieloma ograniczeniami to klasyczny problem optymalizacyjny – człowiek nie jest w stanie efektywnie rozwiązać go dla 200 pojazdów. Systemy AI oparte na algorytmach genetycznych, uczeniu maszynowym i heurystykach rozwiązują to w minuty, redukując koszty paliwa o 10-20%."
+  },
+  {
+    q: "Twoja firma rozważa wdrożenie AI. Od czego NAJLEPIEJ zacząć, aby ograniczyć ryzyko i szybko pokazać wartość?",
+    opts: [
+      "Od razu zautomatyzować wszystkie procesy w firmie jednocześnie",
+      "Wybrać jeden pilot – konkretny proces z mierzalnymi KPI i czystymi danymi",
+      "Najpierw wymienić cały system IT i ERP, a dopiero potem AI",
+      "Poczekać, aż branża wypracuje standardy za 5 lat"
+    ],
+    correct: 1,
+    fb: "Best practice wdrożenia AI to podejście 'start small, think big'. Pilot na jednym procesie (np. prognozowanie popytu dla jednej kategorii towarów) pozwala szybko pokazać ROI, zdobyć doświadczenie organizacji i minimalizować ryzyko. Skalowanie następuje po udowodnieniu wartości."
+  },
+  {
+    q: "Co to jest 'ostatnia mila' (last-mile delivery) i jak AI może tu pomóc?",
+    opts: [
+      "Ostatnia mila to dokumentacja przed zamknięciem magazynu",
+      "Ostatni etap dostawy do klienta końcowego – AI optymalizuje kolejność dostaw, przewiduje nieobecność odbiorców i sugeruje dynamiczne zmiany trasy",
+      "Kontrola jakości przed załadunkiem towarów",
+      "Finalna faktura wystawiana po dostarczeniu towaru"
+    ],
+    correct: 1,
+    fb: "Ostatnia mila to najtrudniejszy i najdroższy etap dostawy (20-30% całkowitego kosztu). AI analizuje dane historyczne o klientach, godziny ich aktywności, warunki drogowe i dynamicznie dostosowuje kolejność oraz trasy. Efekt: wyższa skuteczność pierwszej dostawy i redukcja kosztów o 12-18%."
+  },
+  {
+    q: "Który wskaźnik NAJLEPIEJ mierzy zwrot z inwestycji w system AI do zarządzania zapasami?",
+    opts: [
+      "Liczba funkcji w oprogramowaniu AI",
+      "Redukcja wartości nadmiernych zapasów (dead stock) + poprawa fill rate + zmniejszenie kosztów magazynowania",
+      "Zadowolenie pracowników z nowego systemu",
+      "Szybkość wdrożenia projektu w dniach"
+    ],
+    correct: 1,
+    fb: "ROI z AI w zarządzaniu zapasami mierzy się przez twarde, finansowe KPI: spadek wartości zamrożonego kapitału w nadmiernych zapasach, wzrost wskaźnika realizacji zamówień (fill rate) bez braków, oraz obniżenie kosztów przestrzeni magazynowej. To pokazuje realną wartość biznesową."
+  },
+  {
+    q: "Autonomiczne roboty AMR (Autonomous Mobile Robots) w magazynie zastępują wózki widłowe. Jaka jest główna przewaga AMR nad tradycyjnymi rozwiązaniami?",
+    opts: [
+      "AMR są zawsze tańsze w zakupie niż wózki widłowe",
+      "AMR nie wymagają żadnej infrastruktury – pracują w istniejącym układzie magazynu i dynamicznie omijają przeszkody",
+      "AMR mogą podnosić dowolnie ciężkie ładunki",
+      "AMR nie potrzebują ładowania baterii"
+    ],
+    correct: 1,
+    fb: "Główna przewaga AMR to elastyczność operacyjna – nie wymagają stałych torów ani przebudowy magazynu (inaczej niż starsze AGV). Nawigują autonomicznie w dynamicznym środowisku, omijają ludzi i przeszkody, i mogą pracować 20h/dobę. Wdrożenie jest szybsze i mniej kapitałochłonne niż modernizacja infrastruktury."
+  },
+  {
+    q: "Co to jest 'cyfrowy bliźniak' (digital twin) łańcucha dostaw i jakie ma zastosowanie?",
+    opts: [
+      "Backup danych w drugiej lokalizacji centrum danych",
+      "Wirtualna kopia fizycznego łańcucha dostaw w czasie rzeczywistym – pozwala symulować scenariusze 'co jeśli' i testować decyzje bez ryzyka",
+      "Zduplikowany system ERP dla działu księgowości",
+      "Program szkoleniowy dla nowych pracowników logistyki"
+    ],
+    correct: 1,
+    fb: "Digital twin to wirtualna replika całego łańcucha dostaw zasilana danymi z IoT, ERP i GPS. Menedżerowie mogą symulować: 'co się stanie gdy zamknie się port X?', 'jak zmiana dostawcy wpłynie na koszty?' lub 'jak redistrybuować zapasy przed sezonem?'. To narzędzie do zarządzania ryzykiem i strategicznego planowania."
+  },
+  {
+    q: "Wizja komputerowa (computer vision) jest wdrażana w magazynie. Które zastosowanie ma NAJWIĘKSZY bezpośredni wpływ na redukcję kosztów?",
+    opts: [
+      "Monitorowanie stanu parkingu przed magazynem",
+      "Automatyczna kontrola jakości towarów, detekcja uszkodzeń i weryfikacja kompletności zamówień",
+      "Rozpoznawanie twarzy pracowników dla systemu HR",
+      "Liczenie samochodów na rampach rozładunkowych"
+    ],
+    correct: 1,
+    fb: "Automatyczna kontrola jakości wizją komputerową eliminuje błędy kompletacji (zwroty, reklamacje), wykrywa uszkodzenia przed wysyłką (unikamy kosztownych reklamacji) i weryfikuje kompletność zamówień. Systemy osiągają 99.5%+ dokładność i działają 24/7, zastępując kosztowne ręczne inspekcje. Redukcja błędów kompletacji o 25-40% to mierzalny wynik."
+  },
+  {
+    q: "Jako menedżer ds. logistyki słyszysz o 'AI Decision Support' dla zarządu. Co to oznacza w praktyce?",
+    opts: [
+      "AI przejmuje wszystkie decyzje zarządu bez potrzeby angażowania ludzi",
+      "System AI dostarcza rekomendacje, scenariusze i analizy ryzyka, które wspierają (ale nie zastępują) decyzje menedżerów",
+      "Chatbot odpowiadający na pytania pracowników o politykę firmy",
+      "Automatyczne generowanie prezentacji PowerPoint"
+    ],
+    correct: 1,
+    fb: "AI Decision Support to systemy, które przetwarzają ogromne ilości danych i dostarczają menedżerom: rekomendacje oparte na danych, analizy scenariuszowe, wskaźniki ryzyka i prognozy. Człowiek pozostaje w centrum decyzji – AI eliminuje informacyjny przeciążenie i zapewnia, że decyzje opierają się na pełnym obrazie sytuacji, nie na intuicji."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answers = [];
+let answered = false;
+
+function startQuiz() {
+  document.getElementById('introScreen').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[current];
+  const letters = ['A','B','C','D'];
+  
+  document.getElementById('questionNum').textContent = `PYTANIE ${String(current+1).padStart(2,'0')}`;
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressText').textContent = `Pytanie ${current+1} z ${questions.length}`;
+  document.getElementById('scoreText').textContent = `Wynik: ${score}`;
+  document.getElementById('progressFill').style.width = `${(current / questions.length) * 100}%`;
+  
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = true;
+  nextBtn.textContent = current < questions.length - 1 ? 'Następne pytanie →' : 'Zobacz wyniki →';
+
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback';
+  feedback.style.display = 'none';
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="opt-letter">${letters[i]}</div><span>${opt}</span>`;
+    div.onclick = () => selectAnswer(i);
+    list.appendChild(div);
+  });
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[current];
+  const opts = document.querySelectorAll('.option');
+  const isCorrect = idx === q.correct;
+
+  if (isCorrect) score++;
+  answers.push({ q: q.q, correct: isCorrect, chosen: idx, correctIdx: q.correct, opts: q.opts });
+
+  opts.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.correct) {
+      opt.classList.add('correct');
+    } else if (i === idx && !isCorrect) {
+      opt.classList.add('wrong');
+    } else if (i !== q.correct) {
+      opt.classList.add('dimmed');
+    }
+  });
+
+  const feedback = document.getElementById('feedback');
+  feedback.style.display = 'block';
+  if (isCorrect) {
+    feedback.className = 'feedback show correct-fb';
+    document.getElementById('feedbackTitle').textContent = '✓ Poprawnie!';
+  } else {
+    feedback.className = 'feedback show wrong-fb';
+    document.getElementById('feedbackTitle').textContent = '✗ Niepoprawnie';
+  }
+  document.getElementById('feedbackBody').textContent = q.fb;
+
+  document.getElementById('scoreText').textContent = `Wynik: ${score}`;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showScore();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showScore() {
+  document.getElementById('quizArea').style.display = 'none';
+  const ss = document.getElementById('scoreScreen');
+  ss.classList.add('show');
+
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('sbCorrect').textContent = score;
+  document.getElementById('sbWrong').textContent = questions.length - score;
+  document.getElementById('sbPct').textContent = Math.round((score/questions.length)*100) + '%';
+
+  const pct = score / questions.length;
+  const arc = 439.8;
+  setTimeout(() => {
+    document.getElementById('scoreArc').style.strokeDashoffset = arc * (1 - pct);
+    const arcEl = document.getElementById('scoreArc');
+    if (pct >= 0.8) arcEl.style.stroke = 'var(--green)';
+    else if (pct >= 0.5) arcEl.style.stroke = 'var(--accent)';
+    else arcEl.style.stroke = 'var(--red)';
+  }, 100);
+
+  let title, subtitle;
+  if (score >= 9) {
+    title = "🏆 Ekspert AI w logistyce!";
+    subtitle = "Doskonały wynik! Rozumiesz strategiczną wartość AI dla branży logistycznej. Jesteś gotowy prowadzić transformację cyfrową w swoim obszarze.";
+  } else if (score >= 7) {
+    title = "⭐ Solidna wiedza!";
+    subtitle = "Dobry wynik – znasz kluczowe zastosowania AI. Warto pogłębić znajomość tematów, w których popełniłeś/aś błędy, bo to właśnie tam kryją się możliwości optymalizacji.";
+  } else if (score >= 5) {
+    title = "📈 Jest potencjał!";
+    subtitle = "Masz podstawy – teraz czas na pogłębienie wiedzy. Skup się szczególnie na ROI z AI i modelach wdrożenia. Rekomendujemy przejrzenie materiałów z prezentacji.";
+  } else {
+    title = "🚀 Czas na naukę!";
+    subtitle = "AI w logistyce to temat, który warto opanować – będzie kluczowy w kolejnych latach. Wróć do materiałów szkoleniowych i spróbuj quizu ponownie!";
+  }
+
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreSubtitle').textContent = subtitle;
+
+  const reviewDiv = document.getElementById('reviewItems');
+  reviewDiv.innerHTML = '';
+  answers.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = `review-item ${a.correct ? 'r-correct' : 'r-wrong'}`;
+    div.innerHTML = `
+      <div class="review-icon">${a.correct ? '✅' : '❌'}</div>
+      <div>
+        <div class="review-q">${i+1}. ${a.q.substring(0, 80)}${a.q.length > 80 ? '...' : ''}</div>
+        ${!a.correct ? `<div class="review-a">Poprawna: ${a.opts[a.correctIdx].substring(0, 70)}...</div>` : ''}
+      </div>`;
+    reviewDiv.appendChild(div);
+  });
+}
+
+function restartQuiz() {
+  current = 0;
+  score = 0;
+  answers = [];
+  answered = false;
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('scoreArc').style.strokeDashoffset = '439.8';
+  document.getElementById('quizArea').style.display = 'block';
+  loadQuestion();
+}
+</script>
+</body>
+</html>
