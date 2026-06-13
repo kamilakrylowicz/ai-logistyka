@@ -1,0 +1,56 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "confirm": "Confirm",
+        "back": "Back",
+        "search": "Search",
+        "no_results": "No results"
+    },
+    "app": {
+        "title": "AI in Logistics",
+        "subtitle": "Manager Quiz",
+        "badge": "Logistics × AI"
+    },
+    "quiz": {
+        "description": "Test how well you know the applications of artificial intelligence in the logistics industry",
+        "features": {
+            "questions": "10 questions",
+            "questions_sub": "Level: managerial",
+            "feedback": "Instant feedback",
+            "feedback_sub": "Explanation for each answer",
+            "score": "Score with recommendation",
+            "score_sub": "Guidance for further development"
+        },
+        "intro_text": "The quiz covers: demand forecasting, route optimization, fleet management, warehouse operations and AI implementation. Perfect preparation for a strategic conversation about digital transformation.",
+        "start": "Start Quiz →",
+        "question_label": "QUESTION {{num}}",
+        "progress": "Question {{current}} of {{total}}",
+        "score_label": "Score: {{score}}",
+        "next": "Next question →",
+        "show_results": "Show results →",
+        "correct_title": "✓ Correct!",
+        "wrong_title": "✗ Incorrect",
+        "restart": "↩ Start over",
+        "review_title": "Answer Review",
+        "correct_answer": "Correct:",
+        "results": {
+            "total": "/ {{total}}",
+            "correct_label": "✓ Correct answers",
+            "wrong_label": "✗ Wrong answers",
+            "efficiency_label": "⚡ Efficiency",
+            "expert_title": "🏆 AI in Logistics Expert!",
+            "expert_subtitle": "Excellent score! You understand the strategic value of AI for the logistics industry. You're ready to lead digital transformation in your area.",
+            "good_title": "⭐ Solid knowledge!",
+            "good_subtitle": "Good score — you know the key AI applications. It's worth deepening your knowledge of the topics where you made mistakes, as that's where the optimization opportunities lie.",
+            "average_title": "📈 There's potential!",
+            "average_subtitle": "You have the basics — now it's time to deepen your knowledge. Focus especially on ROI from AI and deployment models. We recommend reviewing the presentation materials.",
+            "beginner_title": "🚀 Time to learn!",
+            "beginner_subtitle": "AI in logistics is a topic worth mastering — it will be crucial in the coming years. Return to the training materials and try the quiz again!"
+        }
+    }
+}

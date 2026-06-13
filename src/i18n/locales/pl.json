@@ -1,0 +1,56 @@
+{
+    "common": {
+        "save": "Zapisz",
+        "cancel": "Anuluj",
+        "delete": "Usuń",
+        "edit": "Edytuj",
+        "loading": "Ładowanie...",
+        "error": "Wystąpił błąd",
+        "confirm": "Potwierdź",
+        "back": "Wróć",
+        "search": "Szukaj",
+        "no_results": "Brak wyników"
+    },
+    "app": {
+        "title": "AI w Logistyce",
+        "subtitle": "Quiz dla Menedżerów",
+        "badge": "Logistyka × AI"
+    },
+    "quiz": {
+        "description": "Sprawdź, jak dobrze znasz zastosowania sztucznej inteligencji w branży logistycznej",
+        "features": {
+            "questions": "10 pytań",
+            "questions_sub": "Poziom: menedżerski",
+            "feedback": "Natychmiastowy feedback",
+            "feedback_sub": "Wyjaśnienie każdej odpowiedzi",
+            "score": "Wynik z rekomendacją",
+            "score_sub": "Wskazówki do dalszego rozwoju"
+        },
+        "intro_text": "Quiz obejmuje tematy: prognozowanie popytu, optymalizacja tras, zarządzanie flotą, operacje magazynowe i wdrożenie AI. Idealne przygotowanie przed strategiczną rozmową o transformacji cyfrowej firmy.",
+        "start": "Rozpocznij Quiz →",
+        "question_label": "PYTANIE {{num}}",
+        "progress": "Pytanie {{current}} z {{total}}",
+        "score_label": "Wynik: {{score}}",
+        "next": "Następne pytanie →",
+        "show_results": "Zobacz wyniki →",
+        "correct_title": "✓ Poprawnie!",
+        "wrong_title": "✗ Niepoprawnie",
+        "restart": "↩ Zacznij ponownie",
+        "review_title": "Przegląd odpowiedzi",
+        "correct_answer": "Poprawna:",
+        "results": {
+            "total": "/ {{total}}",
+            "correct_label": "✓ Poprawne odpowiedzi",
+            "wrong_label": "✗ Błędne odpowiedzi",
+            "efficiency_label": "⚡ Skuteczność",
+            "expert_title": "🏆 Ekspert AI w logistyce!",
+            "expert_subtitle": "Doskonały wynik! Rozumiesz strategiczną wartość AI dla branży logistycznej. Jesteś gotowy prowadzić transformację cyfrową w swoim obszarze.",
+            "good_title": "⭐ Solidna wiedza!",
+            "good_subtitle": "Dobry wynik – znasz kluczowe zastosowania AI. Warto pogłębić znajomość tematów, w których popełniłeś/aś błędy, bo to właśnie tam kryją się możliwości optymalizacji.",
+            "average_title": "📈 Jest potencjał!",
+            "average_subtitle": "Masz podstawy – teraz czas na pogłębienie wiedzy. Skup się szczególnie na ROI z AI i modelach wdrożenia. Rekomendujemy przejrzenie materiałów z prezentacji.",
+            "beginner_title": "🚀 Czas na naukę!",
+            "beginner_subtitle": "AI w logistyce to temat, który warto opanować – będzie kluczowy w kolejnych latach. Wróć do materiałów szkoleniowych i spróbuj quizu ponownie!"
+        }
+    }
+}

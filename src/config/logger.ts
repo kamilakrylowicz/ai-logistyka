@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 type Level = 'debug' | 'info' | 'warn' | 'error';
 
 const MIN_LEVEL: Record<string, number> = { debug: 0, info: 1, warn: 2, error: 3 };
