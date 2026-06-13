@@ -3,6 +3,7 @@ export interface Question {
     opts: string[];
     correct: number;
     fb: string;
+    category: CategoryId;
 }
 
 export interface Answer {
@@ -13,4 +14,21 @@ export interface Answer {
     opts: string[];
 }
 
-export type QuizPhase = 'intro' | 'question' | 'score';
+export type QuizPhase = 'intro' | 'category' | 'question' | 'score';
+
+export type CategoryId = 'all' | 'warehouses' | 'automation' | 'data' | 'strategy';
+
+export interface Category {
+    id: CategoryId;
+    labelKey: string;
+    descKey: string;
+    icon: string;
+}
+
+export interface RankingEntry {
+    nick: string;
+    score: number;
+    total: number;
+    category: CategoryId;
+    date: string;
+}

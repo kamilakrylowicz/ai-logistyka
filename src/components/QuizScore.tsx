@@ -1,16 +1,18 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Answer } from '../types/quiz.js';
+import type { Answer, CategoryId } from '../types/quiz.js';
+import { Ranking } from './Ranking.js';
 
 interface QuizScoreProps {
     score: number;
     total: number;
     answers: Answer[];
+    category: CategoryId;
     onRestart: () => void;
 }
 
 /** Final score screen with breakdown and answer review. */
-export function QuizScore({ score, total, answers, onRestart }: QuizScoreProps) {
+export function QuizScore({ score, total, answers, category, onRestart }: QuizScoreProps) {
     const { t } = useTranslation();
     const arcRef = useRef<SVGCircleElement>(null);
     const pct = score / total;
@@ -119,6 +121,8 @@ export function QuizScore({ score, total, answers, onRestart }: QuizScoreProps) 
                     </div>
                 ))}
             </div>
+
+            <Ranking category={category} />
 
             <div
                 className="controls"

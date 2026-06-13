@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { questions } from '../modules/quizData.js';
-import type { Answer, QuizPhase } from '../types/quiz.js';
+import { getQuestions } from '../modules/quizData.js';
+import { saveRankingEntry } from '../modules/ranking.js';
+import type { Answer, CategoryId, QuizPhase } from '../types/quiz.js';
 
 interface QuizState {
     phase: QuizPhase;
@@ -8,6 +9,8 @@ interface QuizState {
     score: number;
     answers: Answer[];
     answered: boolean;
+    categoryId: CategoryId;
+    nick: string;
 }
 
 /** Manages quiz state and transitions. */
@@ -18,10 +21,27 @@ export function useQuiz() {
         score: 0,
         answers: [],
         answered: false,
+        categoryId: 'all',
+        nick: '',
     });
+    const [questions, setQuestions] = useState(() => getQuestions('all'));
 
-    function startQuiz() {
-        setState((s) => ({ ...s, phase: 'question' }));
+    function goToCategory() {
+        setState((s) => ({ ...s, phase: 'category' }));
+    }
+
+    function startQuiz(categoryId: CategoryId, nick: string) {
+        const qs = getQuestions(categoryId);
+        setQuestions(qs);
+        setState({
+            phase: 'question',
+            current: 0,
+            score: 0,
+            answers: [],
+            answered: false,
+            categoryId,
+            nick,
+        });
     }
 
     function selectAnswer(idx: number) {
@@ -46,6 +66,13 @@ export function useQuiz() {
     function nextQuestion() {
         const next = state.current + 1;
         if (next >= questions.length) {
+            saveRankingEntry({
+                nick: state.nick || 'Anonim',
+                score: state.score,
+                total: questions.length,
+                category: state.categoryId,
+                date: new Date().toISOString(),
+            });
             setState((s) => ({ ...s, phase: 'score' }));
         } else {
             setState((s) => ({ ...s, current: next, answered: false }));
@@ -53,8 +80,8 @@ export function useQuiz() {
     }
 
     function restartQuiz() {
-        setState({ phase: 'question', current: 0, score: 0, answers: [], answered: false });
+        setState((s) => ({ ...s, phase: 'category' }));
     }
 
-    return { state, questions, startQuiz, selectAnswer, nextQuestion, restartQuiz };
+    return { state, questions, goToCategory, startQuiz, selectAnswer, nextQuestion, restartQuiz };
 }

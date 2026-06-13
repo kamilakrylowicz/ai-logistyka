@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useQuiz } from '../hooks/useQuiz.js';
+import { CategorySelect } from './CategorySelect.js';
 import { QuizIntro } from './QuizIntro.js';
 import { QuizQuestion } from './QuizQuestion.js';
 import { QuizScore } from './QuizScore.js';
@@ -7,7 +8,8 @@ import { QuizScore } from './QuizScore.js';
 /** Root quiz component — manages phase rendering. */
 export function Quiz() {
     const { t } = useTranslation();
-    const { state, questions, startQuiz, selectAnswer, nextQuestion, restartQuiz } = useQuiz();
+    const { state, questions, goToCategory, startQuiz, selectAnswer, nextQuestion, restartQuiz } =
+        useQuiz();
 
     const lastAnswer = state.answers[state.answers.length - 1] ?? null;
     const currentQuestion = questions[state.current];
@@ -24,7 +26,9 @@ export function Quiz() {
                 <p>{t('quiz.description')}</p>
             </div>
 
-            {state.phase === 'intro' && <QuizIntro onStart={startQuiz} />}
+            {state.phase === 'intro' && <QuizIntro onStart={goToCategory} />}
+
+            {state.phase === 'category' && <CategorySelect onStart={startQuiz} />}
 
             {state.phase === 'question' && currentQuestion && (
                 <QuizQuestion
@@ -44,6 +48,7 @@ export function Quiz() {
                     score={state.score}
                     total={questions.length}
                     answers={state.answers}
+                    category={state.categoryId}
                     onRestart={restartQuiz}
                 />
             )}

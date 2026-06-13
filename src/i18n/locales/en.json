@@ -18,6 +18,23 @@
     },
     "quiz": {
         "description": "Test how well you know the applications of artificial intelligence in the logistics industry",
+        "category_title": "Choose a category",
+        "category_subtitle": "Questions will be randomly selected from the chosen topic",
+        "nick_label": "Your nickname (optional)",
+        "nick_placeholder": "Enter your nickname...",
+        "ranking_title": "🏅 Player Ranking",
+        "categories": {
+            "all": "All topics",
+            "all_desc": "Mix of all categories",
+            "warehouses": "Warehouses",
+            "warehouses_desc": "Robots, AMR, cross-docking",
+            "automation": "Automation",
+            "automation_desc": "Routes, fleet, RPA",
+            "data": "Data & Analytics",
+            "data_desc": "IoT, data lake, visibility",
+            "strategy": "AI Strategy",
+            "strategy_desc": "Deployments, ROI, digital twin"
+        },
         "features": {
             "questions": "10 questions",
             "questions_sub": "Level: managerial",

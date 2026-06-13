@@ -18,6 +18,23 @@
     },
     "quiz": {
         "description": "Sprawdź, jak dobrze znasz zastosowania sztucznej inteligencji w branży logistycznej",
+        "category_title": "Wybierz kategorię",
+        "category_subtitle": "Pytania zostaną losowo dobrane z wybranego tematu",
+        "nick_label": "Twój nick (opcjonalnie)",
+        "nick_placeholder": "Wpisz swój nick...",
+        "ranking_title": "🏅 Ranking graczy",
+        "categories": {
+            "all": "Wszystkie tematy",
+            "all_desc": "Mix wszystkich kategorii",
+            "warehouses": "Magazyny",
+            "warehouses_desc": "Roboty, AMR, cross-docking",
+            "automation": "Automatyzacja",
+            "automation_desc": "Trasy, flota, RPA",
+            "data": "Dane i analityka",
+            "data_desc": "IoT, data lake, visibility",
+            "strategy": "Strategia AI",
+            "strategy_desc": "Wdrożenia, ROI, digital twin"
+        },
         "features": {
             "questions": "10 pytań",
             "questions_sub": "Poziom: menedżerski",
