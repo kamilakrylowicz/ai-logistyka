@@ -26,6 +26,12 @@ export const CATEGORIES: Category[] = [
         descKey: 'quiz.categories.strategy_desc',
         icon: '♟️',
     },
+    {
+        id: 'compliance',
+        labelKey: 'quiz.categories.compliance',
+        descKey: 'quiz.categories.compliance_desc',
+        icon: '⚖️',
+    },
 ];
 
 /** All quiz questions across all categories. */
@@ -285,6 +291,103 @@ export const ALL_QUESTIONS: Question[] = [
         ],
         correct: 1,
         fb: 'Dojrzałość analityczna ewoluuje: descriptive (co?) → diagnostic (dlaczego?) → predictive (co będzie?) → prescriptive (co zrobić?). Prescriptive analytics to szczyt – AI nie tylko przewiduje, ale rekomenduje konkretne działania: "zamów 450 sztuk produktu X od dostawcy B, dostawa w środę". Największy ROI, ale wymaga dojrzałości danych i modeli.',
+    },
+    // --- COMPLIANCE & GOVERNANCE ---
+    {
+        category: 'compliance',
+        q: 'Co oznacza zasada "Human-in-the-Loop" (HITL) w systemach AI stosowanych w logistyce?',
+        opts: [
+            'AI podejmuje wszystkie decyzje autonomicznie bez udziału człowieka',
+            'Człowiek jest włączony w proces decyzyjny AI — weryfikuje, zatwierdza lub koryguje rekomendacje systemu przed ich wykonaniem',
+            'Pracownicy ręcznie wprowadzają dane do systemu AI',
+            'System AI uczy się wyłącznie na podstawie instrukcji od pracowników',
+        ],
+        correct: 1,
+        fb: 'HITL to podejście, w którym człowiek pozostaje aktywnym uczestnikiem pętli decyzyjnej AI. W logistyce oznacza to np. że dyspozytor zatwierdza trasę zaproponowaną przez algorytm, zanim zostanie wysłana do kierowcy. HITL jest szczególnie ważny przy decyzjach wysokiego ryzyka (wstrzymanie dostawy, zmiana dostawcy) i wymagany przez regulacje EU AI Act dla systemów wysokiego ryzyka.',
+    },
+    {
+        category: 'compliance',
+        q: 'EU AI Act klasyfikuje systemy AI w logistyce według poziomu ryzyka. Które zastosowanie AI w logistyce należy do kategorii "wysokiego ryzyka"?',
+        opts: [
+            'System rekomendacji muzyki na firmowej playliście w magazynie',
+            'AI do autonomicznego zarządzania infrastrukturą krytyczną i decydowania o warunkach pracy pracowników',
+            'Chatbot odpowiadający na FAQ klientów dotyczące statusu paczki',
+            'Algorytm sortowania e-maili w skrzynce dyspozytora',
+        ],
+        correct: 1,
+        fb: 'EU AI Act (obowiązuje od 2024) definiuje systemy "wysokiego ryzyka" m.in. jako te wpływające na infrastrukturę krytyczną lub decyzje dotyczące zatrudnienia. Systemy AI zarządzające flotą w sposób wpływający na warunki pracy kierowców wymagają: dokumentacji technicznej, rejestrowania logów, nadzoru ludzkiego i oceny zgodności przed wdrożeniem.',
+    },
+    {
+        category: 'compliance',
+        q: 'Firma logistyczna wdraża AI do oceny wiarygodności dostawców. Jakie ryzyko compliance jest tu NAJWIĘKSZE?',
+        opts: [
+            'System może działać zbyt wolno i spowalniać procesy zakupowe',
+            'Algorytm może dyskryminować dostawców na podstawie cech chronionych (kraj pochodzenia, wielkość firmy) — naruszając prawo antymonopolowe i zasady równego traktowania',
+            'Koszt licencji na oprogramowanie AI może być zbyt wysoki',
+            'System wymaga zbyt dużo miejsca na dysku do przechowywania danych',
+        ],
+        correct: 1,
+        fb: 'Algorytmiczna dyskryminacja to realne ryzyko prawne. Jeśli model AI "nauczył się" korelacji między np. krajem dostawcy a jakością obsługi z powodu historycznych uprzedzeń w danych, może systematycznie wykluczać pewne grupy dostawców. Narusza to unijne przepisy o niedyskryminacji i może skutkować karami. Wymaga audytu bias modelu, explainability i regularnego monitorowania wyników.',
+    },
+    {
+        category: 'compliance',
+        q: 'Co to jest "explainability" (wyjaśnialność) AI i dlaczego jest kluczowa w logistyce?',
+        opts: [
+            'Dokumentacja techniczna opisująca jak zainstalować system AI',
+            'Zdolność systemu AI do wyjaśnienia w zrozumiały sposób DLACZEGO podjął daną decyzję — kluczowa dla audytów, regulacji i zaufania pracowników',
+            'Interfejs użytkownika systemu AI musi być intuicyjny i łatwy w obsłudze',
+            'System AI musi być dostępny 24/7 bez przerw technicznych',
+        ],
+        correct: 1,
+        fb: 'Explainability (XAI) to możliwość odpowiedzi na pytanie "dlaczego AI tak zdecydowało?". W logistyce: dlaczego odmówiono kredytu kupieckiemu temu klientowi? Dlaczego trasa jest taka, a nie inna? EU AI Act wymaga explainability dla systemów wysokiego ryzyka. Praktycznie: modele jak LIME lub SHAP pozwalają "otworzyć czarną skrzynkę" i pokazać, które czynniki wpłynęły na decyzję.',
+    },
+    {
+        category: 'compliance',
+        q: 'Kierowca ciężarówki twierdzi, że algorytm AI niesłusznie przydzielił mu najtrudniejsze trasy. Jakie prawo mu przysługuje zgodnie z RODO?',
+        opts: [
+            'Żadne — decyzje algorytmiczne nie podlegają RODO',
+            'Prawo do wyjaśnienia zautomatyzowanej decyzji, prawo do interwencji ludzkiej i prawo do zakwestionowania decyzji podjętej wyłącznie przez algorytm',
+            'Prawo wyłącznie do wglądu w swoje dane osobowe w systemie',
+            'Prawo do całkowitego usunięcia jego danych z systemu AI',
+        ],
+        correct: 1,
+        fb: 'Art. 22 RODO daje pracownikom prawo do niepodlegania decyzjom opartym wyłącznie na zautomatyzowanym przetwarzaniu, jeśli decyzje te mają istotny wpływ. Pracownik ma prawo żądać: wyjaśnienia logiki decyzji, interwencji człowieka (np. przełożonego), wyrażenia swojego stanowiska i zakwestionowania decyzji. Firmy muszą zapewnić te mechanizmy — inaczej ryzykują karę do 20 mln EUR lub 4% obrotu.',
+    },
+    {
+        category: 'compliance',
+        q: 'Co to jest "AI governance framework" i co powinien zawierać w firmie logistycznej?',
+        opts: [
+            'Oprogramowanie antywirusowe chroniące systemy AI przed atakami',
+            'Zestaw zasad, procesów i ról określających jak firma odpowiedzialnie wdraża, monitoruje i audytuje systemy AI',
+            'Instrukcja obsługi dla pracowników korzystających z systemów AI',
+            'Umowa z dostawcą oprogramowania AI określająca warunki serwisu',
+        ],
+        correct: 1,
+        fb: 'AI governance framework to fundament odpowiedzialnego AI. Powinien zawierać: rejestr wszystkich systemów AI w firmie, ocenę ryzyka każdego systemu, polityki nadzoru ludzkiego (HITL), procedury audytu i monitorowania, zasady zarządzania danymi treningowymi, role i odpowiedzialności (AI Officer), oraz procesy reagowania na incydenty. To nie jest opcjonalne — EU AI Act nakłada obowiązek governance na operatorów systemów wysokiego ryzyka.',
+    },
+    {
+        category: 'compliance',
+        q: 'System AI w centrum dystrybucji analizuje zachowanie pracowników kamerami i przydziela im oceny wydajności. Jakie przepisy mogą być naruszone?',
+        opts: [
+            'Wyłącznie przepisy BHP dotyczące bezpieczeństwa kamer przemysłowych',
+            'RODO (monitoring pracowników), Kodeks Pracy (prawo do prywatności), potencjalnie EU AI Act (system oceny osób w miejscu pracy jako wysokie ryzyko)',
+            'Jedynie przepisy dotyczące ochrony tajemnicy handlowej',
+            'Przepisy o ochronie konkurencji — jeśli dane są sprzedawane konkurencji',
+        ],
+        correct: 1,
+        fb: 'To wielowarstwowe ryzyko prawne. RODO wymaga podstawy prawnej do przetwarzania danych pracowników, informowania ich i minimalizacji danych. Kodeks Pracy chroni godność i prywatność pracownika. EU AI Act klasyfikuje systemy oceniania pracowników jako wysokiego ryzyka. Wdrożenie takiego systemu bez konsultacji z prawnikiem, radą pracowników i inspektorem RODO to prosta droga do postępowania sądowego.',
+    },
+    {
+        category: 'compliance',
+        q: 'Firma outsourcuje system AI do dostawcy zewnętrznego. Kto ponosi odpowiedzialność prawną za decyzje tego systemu wobec klientów i pracowników?',
+        opts: [
+            'Wyłącznie dostawca oprogramowania AI — on stworzył algorytm',
+            'Firma wdrażająca (operator) ponosi główną odpowiedzialność — dostawca odpowiada za zgodność produktu, ale operator za sposób wdrożenia i użycia',
+            'Odpowiedzialność jest równo podzielona 50/50 między firmę i dostawcę',
+            'Nikt nie ponosi odpowiedzialności — algorytmy AI są prawnie neutralne',
+        ],
+        correct: 1,
+        fb: 'EU AI Act rozróżnia "dostawcę" (provider — tworzy AI) od "operatora" (deployer — wdraża AI). Operator ponosi odpowiedzialność za właściwe użycie systemu, nadzór ludzki, szkolenie pracowników i zgodność z regulacjami w swojej domenie. Umowa z dostawcą powinna jasno określać podział odpowiedzialności, dostęp do dokumentacji technicznej i procedury incydentowe. Ignorancja prawna nie zwalnia z odpowiedzialności.',
     },
 ];
 

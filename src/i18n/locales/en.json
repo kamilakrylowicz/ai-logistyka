@@ -33,7 +33,9 @@
             "data": "Data & Analytics",
             "data_desc": "IoT, data lake, visibility",
             "strategy": "AI Strategy",
-            "strategy_desc": "Deployments, ROI, digital twin"
+            "strategy_desc": "Deployments, ROI, digital twin",
+            "compliance": "Compliance & AI Act",
+            "compliance_desc": "Regulations, HITL, accountability"
         },
         "features": {
             "questions": "10 questions",

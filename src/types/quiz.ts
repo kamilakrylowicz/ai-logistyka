@@ -16,7 +16,7 @@ export interface Answer {
 
 export type QuizPhase = 'intro' | 'category' | 'question' | 'score';
 
-export type CategoryId = 'all' | 'warehouses' | 'automation' | 'data' | 'strategy';
+export type CategoryId = 'all' | 'warehouses' | 'automation' | 'data' | 'strategy' | 'compliance';
 
 export interface Category {
     id: CategoryId;
